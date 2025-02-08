@@ -12,7 +12,7 @@ public abstract class Car {
     protected String brand;
     protected String model;
 
-    public Car(String brand, String model, String serialNumber) {
+    protected Car(String brand, String model, String serialNumber) {
         this.brand = brand;
         this.model = model;
         this.serialNumber = serialNumber;
