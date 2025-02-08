@@ -37,8 +37,8 @@ public class Utils {
     }
 
     public static boolean contains(Object e, Object[] array) {
-        for(int i = 0; i < array.length; i++) {
-            if(e.equals(array[i])){
+        for(Object arrayItem : array) {
+            if(e.equals(arrayItem)){
                 return true;
             }
         }
