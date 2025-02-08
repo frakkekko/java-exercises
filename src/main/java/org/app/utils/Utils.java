@@ -1,22 +1,23 @@
 package org.app.utils;
 
+import org.app.exceptions.MaxMinCalcException;
+import org.app.exceptions.OddSizeListException;
+
 import java.math.BigInteger;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Utils {
-    public static <T extends  Number & Comparable> Map<String, T> getMaxAndMinFromList(List<T> numbers) throws RuntimeException {
+    public static <T extends  Number & Comparable> Map<String, T> getMaxAndMinFromList(List<T> numbers) throws MaxMinCalcException {
         Map<String, T> mappedValues = new HashMap<>();
 
         Optional<T> max = numbers.stream().max(T::compareTo);
         Optional<T> min = numbers.stream().min(T::compareTo);
 
         if(max.isEmpty() || min.isEmpty()) {
-            throw new RuntimeException("An error occurred in max/min calculation");
+            throw new MaxMinCalcException();
         }
 
         mappedValues.put("Max", max.get());
@@ -55,9 +56,9 @@ public class Utils {
         return true;
     }
 
-    public static <T> List<T> getZigZagOrder(List<T> list) throws RuntimeException {
+    public static <T> List<T> getZigZagOrder(List<T> list) throws OddSizeListException {
         if(list.size() % 2 != 0) {
-            throw new RuntimeException("Cannot resolve odd size list");
+            throw new OddSizeListException();
         }
 
         List<T> zigZagOrderList = new ArrayList<>();
