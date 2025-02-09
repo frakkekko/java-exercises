@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ArrayExercisesManualImpl extends Exercises implements ArrayExercisesI {
-    private static ArrayExercisesManualImpl arrayExercisesInstance;
+    private static volatile ArrayExercisesManualImpl arrayExercisesInstance;
 
     private ArrayExercisesManualImpl(){};
 
@@ -179,8 +179,10 @@ public class ArrayExercisesManualImpl extends Exercises implements ArrayExercise
     }
 
     public static ArrayExercisesManualImpl getInstance() {
-        if(ArrayExercisesManualImpl.arrayExercisesInstance == null) {
-            ArrayExercisesManualImpl.arrayExercisesInstance = new ArrayExercisesManualImpl();
+        synchronized (ArrayExercisesManualImpl.class) {
+            if(ArrayExercisesManualImpl.arrayExercisesInstance == null) {
+                ArrayExercisesManualImpl.arrayExercisesInstance = new ArrayExercisesManualImpl();
+            }
         }
         return ArrayExercisesManualImpl.arrayExercisesInstance;
     }

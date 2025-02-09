@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ArrayExercisesStandardImpl extends Exercises implements ArrayExercisesI {
-    private static ArrayExercisesStandardImpl arrayExercisesInstance;
+    private static volatile ArrayExercisesStandardImpl arrayExercisesInstance;
 
     private ArrayExercisesStandardImpl(){};
 
@@ -166,8 +166,10 @@ public class ArrayExercisesStandardImpl extends Exercises implements ArrayExerci
     }
 
     public static ArrayExercisesStandardImpl getInstance() {
-        if(ArrayExercisesStandardImpl.arrayExercisesInstance == null) {
-            ArrayExercisesStandardImpl.arrayExercisesInstance = new ArrayExercisesStandardImpl();
+        synchronized (ArrayExercisesStandardImpl.class) {
+            if(ArrayExercisesStandardImpl.arrayExercisesInstance == null) {
+                ArrayExercisesStandardImpl.arrayExercisesInstance = new ArrayExercisesStandardImpl();
+            }
         }
         return ArrayExercisesStandardImpl.arrayExercisesInstance;
     }

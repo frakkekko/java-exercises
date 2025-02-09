@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CycleExercises extends Exercises {
-    private static CycleExercises cycleExercisesInstance;
+    private static volatile CycleExercises cycleExercisesInstance;
 
     private CycleExercises(){};
 
@@ -89,8 +89,10 @@ public class CycleExercises extends Exercises {
     }
 
     public static CycleExercises getInstance() {
-        if(CycleExercises.cycleExercisesInstance == null) {
-            CycleExercises.cycleExercisesInstance = new CycleExercises();
+        synchronized (CycleExercises.class) {
+            if(CycleExercises.cycleExercisesInstance == null) {
+                CycleExercises.cycleExercisesInstance = new CycleExercises();
+            }
         }
         return CycleExercises.cycleExercisesInstance;
     }

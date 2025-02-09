@@ -6,7 +6,7 @@ import org.app.utils.Utils;
 import java.util.Arrays;
 
 public class StringExercises extends Exercises {
-    private static StringExercises stringExercisesInstance;
+    private static volatile StringExercises stringExercisesInstance;
 
     private StringExercises(){};
 
@@ -61,8 +61,10 @@ public class StringExercises extends Exercises {
     }
 
     public static StringExercises getInstance() {
-        if(StringExercises.stringExercisesInstance == null) {
-            StringExercises.stringExercisesInstance = new StringExercises();
+        synchronized (StringExercises.class) {
+            if(StringExercises.stringExercisesInstance == null) {
+                StringExercises.stringExercisesInstance = new StringExercises();
+            }
         }
         return StringExercises.stringExercisesInstance;
     }
